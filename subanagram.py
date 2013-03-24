@@ -1,6 +1,6 @@
 #! /usr/bin/env python
 
-def main():    # Don't leave the code in the global namespace, it runs slower
+def main():             # Don't leave code in the global namespace - it runs slower
     import sys
 
     N = int(raw_input())
@@ -8,43 +8,44 @@ def main():    # Don't leave the code in the global namespace, it runs slower
     list_of_strings = []
     smallest_string_length = 101 
     smallest_string = ''
-    temp_string = ''
+    next_input_string = ''
 
     for count in xrange(N):
-        temp_string = str(raw_input())
-        list_of_strings.append(temp_string)
-        if len(temp_string) < smallest_string_length:
-            smallest_string = temp_string
+        next_input_string = str(raw_input())
+        list_of_strings.append(next_input_string)
+        if len(next_input_string) < smallest_string_length:
+            smallest_string = next_input_string
             smallest_string_length = len(smallest_string)
 
-    search_set = list(smallest_string)
+    possibles_list = list(smallest_string)
 
-    results = {}
+    possibles_dict = {}
 
-    for x in search_set:
-        if x in results:
-            results[x] = results[x] + 1
+    for x in possibles_list:
+        if x in possibles_dict:
+            possibles_dict[x] = possibles_dict[x] + 1
         else:
-            results[x] = 1
+            possibles_dict[x] = 1
 
-    for character in list(set(search_set)):
-        for strings in list_of_strings:
-            occurrences = strings.count(character)
-            if occurrences < results[character]:
-                results[character] = occurrences
+    for character in list(set(possibles_list)):
+        for a_string in list_of_strings:
+            occurrences = a_string.count(character)
+            if occurrences < possibles_dict[character]:
+                possibles_dict[character] = occurrences
 
-    result_set = []
-    for key in results:
-        while results[key] > 0:
-            result_set.append(key)
-            results[key] -= 1
+    results = []
 
-    result_set.sort()
+    for key in possibles_dict:
+        while possibles_dict[key] > 0:
+            results.append(key)
+            possibles_dict[key] -= 1
 
-    if len(result_set) == 0:
+    results.sort()
+
+    if len(results) == 0:
         print "no such string"
     else:
-        for x in result_set:
+        for x in results:
             sys.stdout.write(x)
    
 main()
